@@ -29,7 +29,7 @@ abstract class BaseApiInstance {
 
   public post<T>(
     url: string,
-    data?: any,
+    data?: unknown,
     config: AxiosRequestConfig = {}
   ): Promise<AxiosResponse<T>> {
     return this.axiosInstance.post<T>(url, data, config);
@@ -37,7 +37,7 @@ abstract class BaseApiInstance {
 
   public put<T>(
     url: string,
-    data?: any,
+    data?: unknown,
     config: AxiosRequestConfig = {}
   ): Promise<AxiosResponse<T>> {
     return this.axiosInstance.put<T>(url, data, config);

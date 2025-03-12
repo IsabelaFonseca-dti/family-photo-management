@@ -20,7 +20,11 @@ let UsersService = class UsersService {
     async findAll() {
         try {
             const response = await this.httpService.axiosRef.get('/users');
-            return response.data;
+            return response.data.map(user => ({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+            }));
         }
         catch (e) {
             console.log(`Error while fetching Users: error - ${e}`);

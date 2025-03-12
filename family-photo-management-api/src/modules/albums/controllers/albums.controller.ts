@@ -13,12 +13,12 @@ export class AlbumsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDTORequest) {
-    return this.albumsService.update(+id, updateAlbumDto);
+  update(@Param('id') id: number, @Body() updateAlbumDto: UpdateAlbumDTORequest) {
+    return this.albumsService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<boolean> {
-    return this.albumsService.delete(+id);
+  delete(@Param('id') id: number): Promise<boolean> {
+    return this.albumsService.delete(id);
   }
 }

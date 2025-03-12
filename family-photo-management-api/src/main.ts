@@ -3,7 +3,11 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: process.env['ALLOWED_CORS_ORIGINS'],
+    },
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Family Photo Management API')

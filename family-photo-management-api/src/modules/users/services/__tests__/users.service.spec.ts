@@ -34,8 +34,8 @@ describe('Tests on UsersService', () => {
 
   describe('tests on findAll', () => {
     const usersMock: ListUsersDTOResponse[] = [
-      { id: 1, userName: 'user1', email: 'user1@example.com' },
-      { id: 2, userName: 'user2', email: 'user2@example.com' },
+      { id: 1, username: 'user1', email: 'user1@example.com' },
+      { id: 2, username: 'user2', email: 'user2@example.com' },
     ];
 
     it('should return a list of all available users', async () => {

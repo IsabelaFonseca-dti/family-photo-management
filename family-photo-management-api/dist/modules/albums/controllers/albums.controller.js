@@ -24,10 +24,10 @@ let AlbumsController = class AlbumsController {
         return this.albumsService.create(createAlbumDto);
     }
     update(id, updateAlbumDto) {
-        return this.albumsService.update(+id, updateAlbumDto);
+        return this.albumsService.update(id, updateAlbumDto);
     }
     delete(id) {
-        return this.albumsService.delete(+id);
+        return this.albumsService.delete(id);
     }
 };
 exports.AlbumsController = AlbumsController;
@@ -43,14 +43,14 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", void 0)
 ], AlbumsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], AlbumsController.prototype, "delete", null);
 exports.AlbumsController = AlbumsController = __decorate([

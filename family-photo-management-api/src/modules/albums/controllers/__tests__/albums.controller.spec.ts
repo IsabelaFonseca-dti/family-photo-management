@@ -56,7 +56,7 @@ describe('Tests on AlbumsController', () => {
   });
 
   describe('tests on update', () => {
-    const albumId = '1';
+    const albumId = 1;
     const updateAlbumDto: UpdateAlbumDTORequest = {
       title: 'Updated Album',
       userId: 1,
@@ -80,7 +80,7 @@ describe('Tests on AlbumsController', () => {
   });
 
   describe('tests on delete', () => {
-    const albumId = '1';
+    const albumId = 1;
 
     it('should delete an album and return true', async () => {
       mockDelete.mockResolvedValueOnce(true);

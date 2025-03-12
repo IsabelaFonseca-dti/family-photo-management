@@ -8,16 +8,18 @@ export const Table = styled.table({
 
 export const TableCell = styled.td({
   padding: "10px",
-  border: "1px solid #ddd",
+  border: `1px solid${theme.colorPalette.primary}`,
 });
 
 export const TableRow = styled.tr({
   textAlign: "left",
+  backgroundColor: `${theme.colorPalette.text}`,
+  color: `${theme.colorPalette.primary}`,
 });
 
 export const TableHeader = styled.th({
   padding: "10px",
-  border: "1px solid #ddd",
+  border: `1px solid${theme.colorPalette.primary}`,
   backgroundColor: `${theme.colorPalette.accentSecondary}`,
 });
 

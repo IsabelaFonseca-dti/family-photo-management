@@ -1,5 +1,5 @@
 export interface IListUserDTO {
   id: number;
-  userName: string;
+  username: string;
   email: string;
 }

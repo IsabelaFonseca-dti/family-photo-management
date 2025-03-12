@@ -10,7 +10,11 @@ export class UsersService {
   async findAll(): Promise<ListUsersDTOResponse[]> {
     try {
       const response = await this.httpService.axiosRef.get<ListUsersDTOResponse[]>('/users');
-      return response.data;
+      return response.data.map(user => ({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      }));
     } catch (e) {
       console.log(`Error while fetching Users: error - ${e}`);
       throw e;

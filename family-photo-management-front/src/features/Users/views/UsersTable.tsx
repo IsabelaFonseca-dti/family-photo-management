@@ -1,13 +1,7 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import {
-  ActionButton,
-  Table,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "./styles/UsersTable.styled";
-import { IListUserDTO } from "../types/IListUserDTO";
+import { ActionButton, Table, TableCell, TableHeader, TableRow } from './styles/UsersTable.styled';
+import { IListUserDTO } from '../types/IListUserDTO';
 
 interface IUserTable {
   data: IListUserDTO[];
@@ -25,9 +19,9 @@ const UserTable: FC<IUserTable> = ({ data, action }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell>{row.userName}</TableCell>
+        {data.map((row, index) => (
+          <TableRow key={`table-row-${index}`}>
+            <TableCell>{row.username}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>
               <ActionButton onClick={() => action(row)}>🖼️</ActionButton>

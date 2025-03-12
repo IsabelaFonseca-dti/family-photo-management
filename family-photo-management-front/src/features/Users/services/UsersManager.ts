@@ -1,13 +1,15 @@
-import { IListUserDTO } from "../types/IListUserDTO";
-import { IUsersRepository } from "../types/IUsersRepository";
+import { IUsersRepository } from '../types/IUsersRepository';
 
 export class UsersManager {
   constructor(private readonly repository: IUsersRepository) {}
 
-  async getUsers(): Promise<IListUserDTO[] | null> {
-    console.log("manager");
-    const users = await this.repository.listUsers();
-    return users;
+  async getUsers() {
+    try {
+      const users = await this.repository.listUsers();
+      return users;
+    } catch (error) {
+      console.log('Failed to fetch users, error:', error);
+    }
   }
 }
 

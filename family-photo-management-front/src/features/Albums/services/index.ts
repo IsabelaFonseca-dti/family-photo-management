@@ -1,8 +1,8 @@
-import apiInstance from "../../../shared/api/Api";
-import UsersManager from "./UsersManager";
-import UsersRepository from "./UsersRepository";
+import apiInstance from '../../../shared/api/Api';
+import AlbumsManager from './AlbumsManager';
+import AlbumsRepository from './AlbumsRepository';
 
-const usersRepositoryInstance = new UsersRepository(apiInstance);
-const usersManagerInstance = new UsersManager(usersRepositoryInstance);
+const albumsRepositoryInstance = new AlbumsRepository(apiInstance);
+const albumsManagerInstance = new AlbumsManager(albumsRepositoryInstance);
 
-export default usersManagerInstance;
+export default albumsManagerInstance;

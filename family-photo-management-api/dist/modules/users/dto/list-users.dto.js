@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListUsersDTOResponse = void 0;
 class ListUsersDTOResponse {
     id;
-    userName;
+    username;
     email;
 }
 exports.ListUsersDTOResponse = ListUsersDTOResponse;

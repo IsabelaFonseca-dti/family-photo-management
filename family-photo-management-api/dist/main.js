@@ -4,7 +4,11 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const swagger_1 = require("@nestjs/swagger");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, {
+        cors: {
+            origin: process.env['ALLOWED_CORS_ORIGINS'],
+        },
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Family Photo Management API')
         .setDescription('Family Photo Management API')

@@ -1,5 +1,5 @@
 export declare class ListUsersDTOResponse {
     id: number;
-    userName: string;
+    username: string;
     email: string;
 }

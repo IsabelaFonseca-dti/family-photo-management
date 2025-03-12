@@ -5,6 +5,6 @@ export declare class AlbumsController {
     private readonly albumsService;
     constructor(albumsService: AlbumsService);
     create(createAlbumDto: CreateAlbumDTORequest): Promise<CreateAlbumDTOResponse>;
-    update(id: string, updateAlbumDto: UpdateAlbumDTORequest): Promise<UpdateAlbumDTOResponse>;
-    delete(id: string): Promise<boolean>;
+    update(id: number, updateAlbumDto: UpdateAlbumDTORequest): Promise<UpdateAlbumDTOResponse>;
+    delete(id: number): Promise<boolean>;
 }
