@@ -3,9 +3,10 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
+  const allowedOrigins = process.env.ALLOWED_CORS_ORIGINS?.split(',') || [];
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: process.env['ALLOWED_CORS_ORIGINS'],
+      origin: allowedOrigins,
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
     },
   });

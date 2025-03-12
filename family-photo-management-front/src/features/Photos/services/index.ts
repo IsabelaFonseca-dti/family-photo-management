@@ -1,8 +1,8 @@
 import apiInstance from '../../../shared/api/Api';
-import AlbumsManager from './AlbumsManager';
-import AlbumsRepository from './AlbumsRepository';
+import PhotosManager from './PhotosManager';
+import PhotosRepository from './PhotosRepository';
 
-const albumsRepositoryInstance = new AlbumsRepository(apiInstance);
-const albumsManagerInstance = new AlbumsManager(albumsRepositoryInstance);
+const photosRepositoryInstance = new PhotosRepository(apiInstance);
+const photosManagerInstance = new PhotosManager(photosRepositoryInstance);
 
-export default albumsManagerInstance;
+export default photosManagerInstance;

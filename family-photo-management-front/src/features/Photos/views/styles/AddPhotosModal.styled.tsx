@@ -24,6 +24,25 @@ export const TitleInput = styled.input({
   backgroundColor: 'white',
   textAlign: 'center',
   color: '#000',
+  padding: '10px',
+  borderRadius: '4px',
+  border: '1px solid #ccc',
+  fontSize: '1rem',
+  width: '100%',
+});
+
+export const FileInputContainer = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.5rem',
+});
+
+export const FileInput = styled.input({
+  padding: '10px',
+  fontSize: '1rem',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  width: '100%',
 });
 
 export const SendFormButton = styled.button<{ isDisabled?: boolean }>(({ isDisabled }) => ({
@@ -35,5 +54,10 @@ export const SendFormButton = styled.button<{ isDisabled?: boolean }>(({ isDisab
   borderRadius: '4px',
   cursor: isDisabled ? 'not-allowed' : 'pointer',
   fontSize: '1rem',
-  opacity: isDisabled ? 0.7 : 1,
+  transition: 'background-color 0.3s, opacity 0.3s',
+  opacity: isDisabled ? 0.6 : 1,
+
+  '&:hover': {
+    opacity: isDisabled ? 0.6 : 0.8,
+  },
 }));

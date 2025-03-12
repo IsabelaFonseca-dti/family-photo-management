@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
+import { theme } from '../../theme/theme';
 
 export const SliderWrapper = styled.div({
   position: 'relative',
   width: '50%',
-  height: '50%',
+  height: '600px',
   margin: 'auto',
   '& img': {
     width: '100%',
@@ -15,7 +16,15 @@ export const SliderWrapper = styled.div({
 export const ImageContainer = styled.div({
   width: '100%',
   height: '100%',
-  overflow: 'hidden',
+});
+
+export const ImageNotFound = styled.div({
+  backgroundColor: `${theme.colorPalette.highlight}`,
+  color: 'white',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 export const SliderButton = styled.button<{ left?: boolean }>(({ left }) => ({
@@ -36,3 +45,20 @@ export const SliderButton = styled.button<{ left?: boolean }>(({ left }) => ({
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
 }));
+
+export const DeleteButton = styled.button({
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  backgroundColor: 'red',
+  color: 'white',
+  border: 'none',
+  padding: '0.8rem',
+  borderRadius: '50%',
+  cursor: 'pointer',
+  zIndex: 10,
+
+  '&:hover': {
+    backgroundColor: 'darkred',
+  },
+});

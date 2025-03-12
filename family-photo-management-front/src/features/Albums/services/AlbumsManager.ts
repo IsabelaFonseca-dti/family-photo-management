@@ -20,10 +20,12 @@ export class AlbumsManager {
     try {
       if (albumId) {
         await this.repository.deleteAlbum(albumId);
+        return;
       }
       throw Error('album id was not provided');
     } catch (error) {
       console.log('Failed to delete album, error:', error);
+      throw error;
     }
   }
   async createAlbum(album: IAlbumsCreationDTO) {
@@ -32,6 +34,7 @@ export class AlbumsManager {
       return createdAlbum;
     } catch (error) {
       console.log('Failed to create album, error:', error);
+      throw error;
     }
   }
 }

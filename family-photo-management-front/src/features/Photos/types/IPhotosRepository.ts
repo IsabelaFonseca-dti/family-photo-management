@@ -1,8 +1,8 @@
-import { IAlbumsCreationDTO } from './IAlbumCreationDTO';
-import { IAlbumsByUserDTO } from './IAlbumsByUserDTO';
+import { IListPhotoDTO } from './IListPhotoDTO';
+import { IPhotoCreationDTO } from './IPhotoCreationDTO';
 
-export interface IAlbumsRepository {
-  listAlbumsByUser(userId: string): Promise<IAlbumsByUserDTO[]>;
-  deleteAlbum(albumId: string): Promise<void>;
-  createAlbum(album: IAlbumsCreationDTO): Promise<IAlbumsByUserDTO>;
+export interface IPhotosRepository {
+  listPhotosByAlbum(albumId: string): Promise<IListPhotoDTO[]>;
+  deletePhoto(photoId: string): Promise<void>;
+  createPhoto(photo: IPhotoCreationDTO): Promise<IListPhotoDTO>;
 }

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import albumsManagerInstance from '../services';
 
-export const useDeleteAlbum = () => {
+export const useAlbumDeletion = () => {
   const {
     isError,
     isPending,

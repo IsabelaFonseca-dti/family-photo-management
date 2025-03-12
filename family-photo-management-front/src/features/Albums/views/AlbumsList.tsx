@@ -7,7 +7,7 @@ import { FaPlus } from 'react-icons/fa';
 import { useAlbumsSlice } from '../hooks/useAlbumSlice';
 import { useNavigate } from 'react-router-dom';
 import { MainRoutesEnum } from '../../../app/types/MainRoutesEnum';
-import { useDeleteAlbum } from '../hooks/useLoadDeleteAlbum';
+import { useAlbumDeletion } from '../hooks/useAlbumDeletion';
 import AddAlbumsModal from './AddAlbumsModal';
 import { useAlbumCreation } from '../hooks/useAlbumCreation';
 import { IAlbumsByUserDTO } from '../types/IAlbumsByUserDTO';
@@ -18,7 +18,7 @@ export interface IAlbumsListProps {}
 const AlbumsList: FC<IAlbumsListProps> = () => {
   const { selectedUser } = useUsersSlice();
   const { deletedItems, deleteItemLocally, createItemLocally, createdItems, setSelectedAlbum } = useAlbumsSlice();
-  const { deleteAlbum } = useDeleteAlbum();
+  const { deleteAlbum } = useAlbumDeletion();
   const { createAlbum } = useAlbumCreation();
   const { data, isLoading } = useLoadAlbumsByUser(selectedUser?.id.toString() ?? undefined);
   const navigate = useNavigate();
@@ -31,9 +31,11 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
   const filteredAlbums = useMemo(() => {
     if (!data) return [];
 
-    const albumsWithoutDeleted = data.filter(album => !deletedItems.includes(album.id));
+    const validCreatedAlbums = createdItems.filter(album => !deletedItems.includes(album.id));
 
-    return [...createdItems, ...albumsWithoutDeleted];
+    const validFetchedAlbums = data.filter(album => !deletedItems.includes(album.id));
+
+    return [...validCreatedAlbums, ...validFetchedAlbums];
   }, [data, deletedItems, createdItems]);
 
   const handleAlbumDeletion = async (id: number) => {

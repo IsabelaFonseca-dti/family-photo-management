@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { IApiConfig } from "../types/IApiConfig";
+import { IApiConfig } from '../types/IApiConfig';
 
 abstract class BaseApiInstance {
   protected axiosInstance: AxiosInstance;
@@ -20,33 +20,19 @@ abstract class BaseApiInstance {
 
   protected abstract initializeResponseInterceptor(): void;
 
-  public get<T>(
-    url: string,
-    config: AxiosRequestConfig = {}
-  ): Promise<AxiosResponse<T>> {
+  public get<T>(url: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> {
     return this.axiosInstance.get<T>(url, config);
   }
 
-  public post<T>(
-    url: string,
-    data?: unknown,
-    config: AxiosRequestConfig = {}
-  ): Promise<AxiosResponse<T>> {
+  public post<T>(url: string, data?: unknown, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> {
     return this.axiosInstance.post<T>(url, data, config);
   }
 
-  public put<T>(
-    url: string,
-    data?: unknown,
-    config: AxiosRequestConfig = {}
-  ): Promise<AxiosResponse<T>> {
+  public put<T>(url: string, data?: unknown, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> {
     return this.axiosInstance.put<T>(url, data, config);
   }
 
-  public delete<T>(
-    url: string,
-    config: AxiosRequestConfig = {}
-  ): Promise<AxiosResponse<T>> {
+  public delete<T>(url: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> {
     return this.axiosInstance.delete<T>(url, config);
   }
 }

@@ -17,7 +17,7 @@ export class AlbumsRepository implements IAlbumsRepository {
   async deleteAlbum(albumId: string): Promise<void> {
     const url = interpolateWithValues(API_ROUTES.DELETE_ALBUMS, albumId);
 
-    await this.api.delete<IAlbumsByUserDTO[]>(url);
+    await this.api.delete(url);
   }
 
   async createAlbum(album: IAlbumsCreationDTO): Promise<IAlbumsByUserDTO> {

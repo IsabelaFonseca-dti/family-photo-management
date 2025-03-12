@@ -10,10 +10,11 @@ interface IAddAlbumsModalProps {
 
 const AddAlbumsModal: FC<IAddAlbumsModalProps> = ({ isOpen, onSubmit, onClose }) => {
   const [albumTitle, setAlbumTitle] = useState<string>('');
+  const isButtonDisabled = !albumTitle.trim();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!albumTitle.trim()) return;
+    setAlbumTitle('');
     onSubmit(albumTitle);
     onClose();
   };
@@ -33,7 +34,9 @@ const AddAlbumsModal: FC<IAddAlbumsModalProps> = ({ isOpen, onSubmit, onClose })
               placeholder="Add album title"
             />
           </TitleInputContainer>
-          <SendFormButton type="submit">Add Album</SendFormButton>
+          <SendFormButton type="submit" disabled={isButtonDisabled} isDisabled={isButtonDisabled}>
+            Add Album
+          </SendFormButton>
         </Form>
       </ModalContent>
     </Modal>
