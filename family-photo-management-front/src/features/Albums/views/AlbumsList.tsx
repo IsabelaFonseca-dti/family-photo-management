@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { ActionsContainer, AddMoreButton, GridContainer, AlbumsListContainer } from './styles/AlbumsList.styled';
 import { BackButton, CardWithAction } from '../../../shared/components';
 import { useUsersSlice } from '../../Users/hooks/useUsersSlice';
@@ -25,9 +25,11 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  if (!selectedUser) {
-    navigate(`/${MainRoutesEnum.USERS}`);
-  }
+  useEffect(() => {
+    if (!selectedUser) {
+      navigate('/');
+    }
+  }, [selectedUser, navigate]);
 
   const filteredAlbums = useMemo(() => {
     if (!data) return [];

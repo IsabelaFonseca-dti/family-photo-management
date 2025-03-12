@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,6 @@ import { BackButton, ImageSlider } from '../../../shared/components';
 import { ActionsContainer, AddMoreButton, PhotoListContainer } from './styles/PhotoList.styled';
 import { useUsersSlice } from '../../Users/hooks/useUsersSlice';
 import { usePhotosSlice } from '../hooks/usePhotosSlice';
-import { MainRoutesEnum } from '../../../app/types/MainRoutesEnum';
 import { useLoadPhotosByAlbum } from '../hooks/useLoadPhotosByAlbum';
 import { useAlbumsSlice } from '../../Albums/hooks/useAlbumSlice';
 import { usePhotoDeletion } from '../hooks/usePhotoDeletion';
@@ -28,9 +27,11 @@ const PhotosList: FC<IPhotosListProps> = () => {
   const { data, isLoading } = useLoadPhotosByAlbum(selectedAlbum?.id.toString() ?? undefined);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  if (!selectedUser || !selectedAlbum) {
-    navigate(`/${MainRoutesEnum.USERS}`);
-  }
+  useEffect(() => {
+    if (!selectedUser || !selectedAlbum) {
+      navigate('/');
+    }
+  }, [selectedUser, selectedAlbum, navigate]);
 
   const filteredPhotos = useMemo(() => {
     if (!data) return [];

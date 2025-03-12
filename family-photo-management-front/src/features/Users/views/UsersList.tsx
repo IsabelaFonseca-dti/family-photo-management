@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { IListUserDTO } from '../types/IListUserDTO';
 import { FilterContainer, FilterInput, UsersListContent } from './styles/UsersList.styled';
 import UserTable from './UsersTable';
@@ -15,7 +15,7 @@ export interface IUsersListProps {}
 const UsersList: FC<IUsersListProps> = () => {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useLoadAllUsers();
+  const { data, isLoading, isError } = useLoadAllUsers();
 
   const [search, setSearch] = useState<string>('');
   const { setSelectedUser } = useUsersSlice();
@@ -30,6 +30,12 @@ const UsersList: FC<IUsersListProps> = () => {
     }
     return data ?? [];
   }, [search, data]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate(`/${MainRoutesEnum.ERROR}`);
+    }
+  }, [isError, navigate]);
 
   const handleUserSelection = (user: IListUserDTO) => {
     setSelectedUser(user);
