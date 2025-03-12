@@ -1,10 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import UsersList from '../../features/Users/views/UsersList';
 import AppHeader from './AppHeader';
-import { RootContent } from './styles/App.styled';
+import { MainContent, RootContent } from './styles/App.styled';
 import { MainRoutesEnum } from '../types/MainRoutesEnum';
 import AlbumsList from '../../features/Albums/views/AlbumsList';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PhotosList from '../../features/Photos/views/PhotosList';
 
 const queryClient = new QueryClient();
 
@@ -13,20 +14,19 @@ function App() {
     <BrowserRouter>
       <RootContent>
         <AppHeader />
-        <div style={{ flex: 1, padding: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <MainContent>
           <QueryClientProvider client={queryClient}>
             <Routes>
-              <Route path={'/teste'} element={<UsersList />} />
               <Route path={MainRoutesEnum.USERS} element={<UsersList />} />
               <Route path={`${MainRoutesEnum.USERS}/:userId/${MainRoutesEnum.ALBUMS}`} element={<AlbumsList />} />
               <Route
-                path={`${MainRoutesEnum.USERS}/:userId/${MainRoutesEnum.ALBUMS}:albumId/${MainRoutesEnum.PHOTOS}`}
-                element={<UsersList />}
+                path={`${MainRoutesEnum.USERS}/:userId/${MainRoutesEnum.ALBUMS}/:albumId/${MainRoutesEnum.PHOTOS}`}
+                element={<PhotosList />}
               />
               <Route path="*" element={<Navigate to={MainRoutesEnum.USERS} replace />} />
             </Routes>
           </QueryClientProvider>
-        </div>
+        </MainContent>
       </RootContent>
     </BrowserRouter>
   );

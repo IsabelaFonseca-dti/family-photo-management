@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const MainContent = styled.main({
+export const UsersListContent = styled.section({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',

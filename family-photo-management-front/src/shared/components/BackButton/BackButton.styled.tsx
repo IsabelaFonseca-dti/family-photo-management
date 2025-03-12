@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { theme } from '../../theme/theme';
 
 export const ActionButton = styled.button({
-  width: '20%',
   padding: '5px',
   backgroundColor: `${theme.colorPalette.highlight}`,
   border: 'none',
@@ -13,4 +12,5 @@ export const ActionButton = styled.button({
   alignItems: 'center',
   justifyContent: 'center',
   gap: '0.5rem',
+  width: '20%',
 });

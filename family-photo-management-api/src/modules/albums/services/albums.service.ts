@@ -2,10 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { CreateAlbumDTOResponse, CreateAlbumDTORequest } from '../dto/create-album.dto';
 import { UpdateAlbumDTOResponse, UpdateAlbumDTORequest } from '../dto/update-album.dto';
+import { ListPhotosDTOResponse } from 'src/modules/photos/dto/list-photos.dto';
 
 @Injectable()
 export class AlbumsService {
   constructor(private readonly httpService: HttpService) {}
+
+  async listPhotosByAlbum(albumId: number): Promise<ListPhotosDTOResponse> {
+    try {
+      const response = await this.httpService.axiosRef.get(`/albums/${albumId}/photos`);
+      return response.data;
+    } catch (e) {
+      console.log(`Error while creating album: ${e}`);
+      throw e;
+    }
+  }
 
   async create(createAlbumDto: CreateAlbumDTORequest): Promise<CreateAlbumDTOResponse> {
     try {

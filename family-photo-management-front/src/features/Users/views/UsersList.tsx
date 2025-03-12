@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { IListUserDTO } from '../types/IListUserDTO';
-import { FilterContainer, FilterInput, MainContent } from './styles/UsersList.styled';
+import { FilterContainer, FilterInput, UsersListContent } from './styles/UsersList.styled';
 import UserTable from './UsersTable';
 import { USER_TEXTS } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
@@ -62,7 +62,7 @@ const UsersList: FC<IUsersListProps> = () => {
     }
   };
 
-  return <MainContent>{renderContent()}</MainContent>;
+  return <UsersListContent>{renderContent()}</UsersListContent>;
 };
 
 export default UsersList;

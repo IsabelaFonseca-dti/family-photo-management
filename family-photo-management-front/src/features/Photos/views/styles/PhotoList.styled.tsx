@@ -1,17 +1,12 @@
 import styled from '@emotion/styled';
 import { theme } from '../../../../shared/theme/theme';
 
-export const AlbumsListContainer = styled.section({
+export const PhotoListContainer = styled.section({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '2rem',
-});
-
-export const GridContainer = styled.section({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gap: '1rem',
+  width: '80%',
 });
 
 export const ActionsContainer = styled.div({
@@ -21,7 +16,6 @@ export const ActionsContainer = styled.div({
 });
 
 export const AddMoreButton = styled.button({
-  width: '20%',
   padding: '0.5rem',
   backgroundColor: `${theme.colorPalette.accent}`,
   border: 'none',
@@ -33,4 +27,5 @@ export const AddMoreButton = styled.button({
   justifyContent: 'center',
   gap: '0.5rem',
   maxHeight: '40px',
+  maxWidth: '160px',
 });

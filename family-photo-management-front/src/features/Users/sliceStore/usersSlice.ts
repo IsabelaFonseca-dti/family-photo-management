@@ -1,5 +1,5 @@
-import { SetCallback } from "../../../shared/store/store";
-import { IListUserDTO } from "../types/IListUserDTO";
+import { SetCallback } from '../../../shared/store/store';
+import { IListUserDTO } from '../types/IListUserDTO';
 
 export interface IUsersInitialState {
   selectedUser: IListUserDTO | null;
@@ -12,8 +12,8 @@ const initialState: IUsersInitialState = {
 };
 
 const actions = (set: SetCallback<IUsersInitialState>) => ({
-  setSelectedUser: (selectedUser: IUsersInitialState["selectedUser"]) =>
-    set((state) => {
+  setSelectedUser: (selectedUser: IUsersInitialState['selectedUser']) =>
+    set(state => {
       state.selectedUser = selectedUser;
     }),
 

@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from 'react';
-import { ActionsContainer, AddMoreButton, GridContainer, MainContent } from './styles/AlbumsList.styled';
+import { ActionsContainer, AddMoreButton, GridContainer, AlbumsListContainer } from './styles/AlbumsList.styled';
 import { BackButton, CardWithAction } from '../../../shared/components';
 import { useUsersSlice } from '../../Users/hooks/useUsersSlice';
 import { useLoadAlbumsByUser } from '../hooks/useLoadAlbumsByUser';
@@ -10,13 +10,14 @@ import { MainRoutesEnum } from '../../../app/types/MainRoutesEnum';
 import { useDeleteAlbum } from '../hooks/useLoadDeleteAlbum';
 import AddAlbumsModal from './AddAlbumsModal';
 import { useAlbumCreation } from '../hooks/useAlbumCreation';
+import { IAlbumsByUserDTO } from '../types/IAlbumsByUserDTO';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IAlbumsListProps {}
 
 const AlbumsList: FC<IAlbumsListProps> = () => {
   const { selectedUser } = useUsersSlice();
-  const { deletedItems, deleteItemLocally, createItemLocally, createdItems } = useAlbumsSlice();
+  const { deletedItems, deleteItemLocally, createItemLocally, createdItems, setSelectedAlbum } = useAlbumsSlice();
   const { deleteAlbum } = useDeleteAlbum();
   const { createAlbum } = useAlbumCreation();
   const { data, isLoading } = useLoadAlbumsByUser(selectedUser?.id.toString() ?? undefined);
@@ -60,6 +61,15 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
     }
   };
 
+  const handleAlbumSelection = (album: IAlbumsByUserDTO) => {
+    if (selectedUser) {
+      setSelectedAlbum(album);
+      navigate(
+        `/${MainRoutesEnum.USERS}/${selectedUser.id}/${MainRoutesEnum.ALBUMS}/${album.id}/${MainRoutesEnum.PHOTOS}`,
+      );
+    }
+  };
+
   const renderContent = () => {
     if (isLoading) {
       return <h2>Loading...</h2>;
@@ -85,7 +95,7 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
                   deleteButton
                   handleDelete={handleAlbumDeletion}
                   onClick={() => {
-                    console.log('album');
+                    handleAlbumSelection(album);
                   }}
                 />
               );
@@ -98,7 +108,7 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
 
   return (
     <>
-      <MainContent>{renderContent()}</MainContent>
+      <AlbumsListContainer>{renderContent()}</AlbumsListContainer>
       <AddAlbumsModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
