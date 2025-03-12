@@ -12,8 +12,16 @@ export const GridContainer = styled.section({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '1rem',
-});
+  alignSelf: 'center',
 
+  '@media (max-width: 1200px)': {
+    gridTemplateColumns: 'repeat(2, 1fr)',
+  },
+
+  '@media (max-width: 768px)': {
+    gridTemplateColumns: '1fr',
+  },
+});
 export const ActionsContainer = styled.div({
   display: 'flex',
   justifyContent: 'space-between',

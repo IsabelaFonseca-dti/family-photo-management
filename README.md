@@ -4,7 +4,7 @@ This repository contains the code for the Family Photo Management application, w
 
 ## Table of Contents
 
-- [Development Environment Links](#development-environment-links)
+- [Development Environment Links](#deployed-environment-links)
 - [Prerequisites](#prerequisites)
 - [How to Clone Repository](#how-to-clone-repository)
 - [Back-end Setup](#back-end-setup)
@@ -14,12 +14,12 @@ This repository contains the code for the Family Photo Management application, w
 
 ---
 
-## Development Environment Links
+## Deployed Environment Links
 
 Here are the links to the development environments for the application:
 
-Back-end Development Environment: https://dev-backend.example.com
-Front-end Development Environment: https://dev-frontend.example.com
+- Back-end Development Environment: https://dev-backend.example.com
+- Front-end Development Environment: https://dev-frontend.example.com
 
 ---
 
