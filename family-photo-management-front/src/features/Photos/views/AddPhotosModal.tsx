@@ -8,6 +8,7 @@ import {
   TitleInputContainer,
   FileInputContainer,
 } from './styles/AddPhotosModal.styled';
+import { PHOTOS_TEXTS } from '../utils/constants';
 
 interface IAddPhotosModalProps {
   isOpen: boolean;
@@ -37,26 +38,26 @@ const AddPhotosModal: FC<IAddPhotosModalProps> = ({ isOpen, onSubmit, onClose })
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent>
-        <h2>Add New Photo</h2>
+        <h2>{PHOTOS_TEXTS.addNewPhoto}</h2>
         <Form onSubmit={handleSubmit}>
           <TitleInputContainer>
-            <label htmlFor="photo-title">Photo Title:</label>
+            <label htmlFor="photo-title">{PHOTOS_TEXTS.photoTitle}</label>
             <TitleInput
               id="photo-title"
               type="text"
               value={photoTitle}
               onChange={e => setPhotoTitle(e.currentTarget.value)}
-              placeholder="Add photo title"
+              placeholder={PHOTOS_TEXTS.photoTitlePlaceholder}
             />
           </TitleInputContainer>
 
           <FileInputContainer>
-            <label htmlFor="photo-file">Select Image:</label>
+            <label htmlFor="photo-file">{PHOTOS_TEXTS.selectImage}</label>
             <input id="photo-file" type="file" accept="image/*" onChange={handleFileChange} />
           </FileInputContainer>
 
           <SendFormButton type="submit" disabled={isButtonDisabled} isDisabled={isButtonDisabled}>
-            Add Photo
+            {PHOTOS_TEXTS.addPhotoButton}
           </SendFormButton>
         </Form>
       </ModalContent>

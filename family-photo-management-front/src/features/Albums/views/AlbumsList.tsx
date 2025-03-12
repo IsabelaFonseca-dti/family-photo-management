@@ -11,6 +11,7 @@ import { useAlbumDeletion } from '../hooks/useAlbumDeletion';
 import AddAlbumsModal from './AddAlbumsModal';
 import { useAlbumCreation } from '../hooks/useAlbumCreation';
 import { IAlbumsByUserDTO } from '../types/IAlbumsByUserDTO';
+import { ALBUM_TEXTS } from '../utils/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IAlbumsListProps {}
@@ -42,9 +43,9 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
     try {
       await deleteAlbum(id.toString());
       deleteItemLocally(id);
-      alert('Album was deleted successfully');
+      alert(ALBUM_TEXTS.albumDeletedSuccess);
     } catch {
-      alert('Album could not be deleted');
+      alert(ALBUM_TEXTS.albumDeletedFailure);
     }
   };
 
@@ -57,9 +58,9 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
       if (createdAlbum) {
         createItemLocally(createdAlbum);
       }
-      alert('Album was created successfully');
+      alert(ALBUM_TEXTS.albumCreatedSuccess);
     } catch {
-      alert('Album could not be created');
+      alert(ALBUM_TEXTS.albumCreatedFailure);
     }
   };
 
@@ -74,16 +75,16 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
 
   const renderContent = () => {
     if (isLoading) {
-      return <h2>Loading...</h2>;
+      return <h2>{ALBUM_TEXTS.loading}</h2>;
     }
     if (data) {
       return (
         <>
           <BackButton />
           <ActionsContainer>
-            <h2>{`List of ${selectedUser?.username}'s (${selectedUser?.email}) Albums`}</h2>
+            <h2>{`${ALBUM_TEXTS.listOfAlbums} ${selectedUser?.username}'s (${selectedUser?.email})`}</h2>
             <AddMoreButton onClick={() => setIsOpen(true)}>
-              <FaPlus /> Add More
+              <FaPlus /> {ALBUM_TEXTS.addMore}
             </AddMoreButton>
           </ActionsContainer>
 
@@ -94,6 +95,7 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
                   id={album.id}
                   key={`card-album-${index}`}
                   title={album.title}
+                  actionName={ALBUM_TEXTS.seePhotos}
                   deleteButton
                   handleDelete={handleAlbumDeletion}
                   onClick={() => {

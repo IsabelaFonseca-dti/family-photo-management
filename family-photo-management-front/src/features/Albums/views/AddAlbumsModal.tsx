@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { Modal } from '../../../shared/components';
 import { Form, ModalContent, SendFormButton, TitleInput, TitleInputContainer } from './styles/AddAlbumsModal.styled';
+import { ALBUM_TEXTS } from '../utils/constants';
 
 interface IAddAlbumsModalProps {
   isOpen: boolean;
@@ -22,20 +23,20 @@ const AddAlbumsModal: FC<IAddAlbumsModalProps> = ({ isOpen, onSubmit, onClose })
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent>
-        <h2>Add new Album</h2>
+        <h2>{ALBUM_TEXTS.addNewAlbum}</h2>
         <Form onSubmit={handleSubmit}>
           <TitleInputContainer>
-            <label htmlFor="album-title">Album Title:</label>
+            <label htmlFor="album-title">{ALBUM_TEXTS.albumTitleLabel}</label>
             <TitleInput
               id="album-title"
               type="text"
               value={albumTitle}
               onChange={e => setAlbumTitle(e.currentTarget.value)}
-              placeholder="Add album title"
+              placeholder={ALBUM_TEXTS.albumTitlePlaceholder}
             />
           </TitleInputContainer>
           <SendFormButton type="submit" disabled={isButtonDisabled} isDisabled={isButtonDisabled}>
-            Add Album
+            {ALBUM_TEXTS.addAlbumButton}
           </SendFormButton>
         </Form>
       </ModalContent>

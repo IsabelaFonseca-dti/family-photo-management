@@ -42,7 +42,7 @@ const UsersList: FC<IUsersListProps> = () => {
 
   const renderContent = () => {
     if (isLoading) {
-      return <h2>Loading...</h2>;
+      return <h2>{USER_TEXTS.loading}</h2>;
     }
     if (data) {
       return (

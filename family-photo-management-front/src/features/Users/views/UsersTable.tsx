@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import { ActionButton, Table, TableCell, TableHeader, TableRow } from './styles/UsersTable.styled';
 import { IListUserDTO } from '../types/IListUserDTO';
+import { USER_TEXTS } from '../utils/constants';
 
 interface IUserTable {
   data: IListUserDTO[];
@@ -13,9 +14,9 @@ const UserTable: FC<IUserTable> = ({ data, action }) => {
     <Table>
       <thead>
         <tr>
-          <TableHeader>Name</TableHeader>
-          <TableHeader>E-mail</TableHeader>
-          <TableHeader>See Albums</TableHeader>
+          <TableHeader>{USER_TEXTS.name}</TableHeader>
+          <TableHeader>{USER_TEXTS.email}</TableHeader>
+          <TableHeader>{USER_TEXTS.seeAlbums}</TableHeader>
         </tr>
       </thead>
       <tbody>

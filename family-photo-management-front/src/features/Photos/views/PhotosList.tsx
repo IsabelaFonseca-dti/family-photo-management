@@ -13,6 +13,7 @@ import { usePhotoDeletion } from '../hooks/usePhotoDeletion';
 import AddPhotosModal from './AddPhotosModal';
 import { usePhotoCreation } from '../hooks/usePhotoCreation';
 import { getRandomPhotoUrl } from '../utils/photosUtils';
+import { PHOTOS_TEXTS } from '../utils/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IPhotosListProps {}
@@ -30,6 +31,7 @@ const PhotosList: FC<IPhotosListProps> = () => {
   if (!selectedUser || !selectedAlbum) {
     navigate(`/${MainRoutesEnum.USERS}`);
   }
+
   const filteredPhotos = useMemo(() => {
     if (!data) return [];
 
@@ -42,7 +44,7 @@ const PhotosList: FC<IPhotosListProps> = () => {
   const handlePhotoCreation = async (photoTitle: string) => {
     try {
       if (selectedAlbum?.id) {
-        const randomPhotoURL = getRandomPhotoUrl(); //generates random pic
+        const randomPhotoURL = getRandomPhotoUrl();
         const createdPhoto = await postPhoto({
           title: photoTitle,
           albumId: selectedAlbum?.id,
@@ -53,9 +55,9 @@ const PhotosList: FC<IPhotosListProps> = () => {
           createPhotoLocally(createdPhoto);
         }
       }
-      alert('Photo was created successfully');
+      alert(PHOTOS_TEXTS.successPhotoCreated);
     } catch {
-      alert('Photo could not be created');
+      alert(PHOTOS_TEXTS.errorPhotoCreated);
     }
   };
 
@@ -64,15 +66,15 @@ const PhotosList: FC<IPhotosListProps> = () => {
       const id = filteredPhotos[index].id;
       await deletePhoto(id.toString());
       deletePhotoLocally(id);
-      alert('Photo was deleted successfully');
+      alert(PHOTOS_TEXTS.successPhotoDeleted);
     } catch {
-      alert('Photo could not be deleted');
+      alert(PHOTOS_TEXTS.errorPhotoDeleted);
     }
   };
 
   const renderContent = () => {
     if (isLoading) {
-      return <h2>Loading...</h2>;
+      return <h2>{PHOTOS_TEXTS.loading}</h2>;
     }
     if (data) {
       return (
@@ -80,15 +82,11 @@ const PhotosList: FC<IPhotosListProps> = () => {
           <BackButton />
           <ActionsContainer>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <h2>{`List of ${selectedUser?.username}'s (${selectedUser?.email}) Photos`}</h2>
-              <h3>{`Album ${selectedAlbum?.title}`}</h3>
+              <h2>{PHOTOS_TEXTS.userPhotos(selectedUser?.username, selectedUser?.email)}</h2>
+              <h3>{PHOTOS_TEXTS.albumTitle(selectedAlbum?.title)}</h3>
             </div>
-            <AddMoreButton
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-            >
-              <FaPlus /> Add More
+            <AddMoreButton onClick={() => setIsModalOpen(true)}>
+              <FaPlus /> {PHOTOS_TEXTS.addMore}
             </AddMoreButton>
           </ActionsContainer>
           <ImageSlider images={filteredPhotos} onDelete={handlePhotoDeletion} />
