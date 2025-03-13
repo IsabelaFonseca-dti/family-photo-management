@@ -10,6 +10,7 @@ export const PHOTOS_TEXTS = {
   successPhotoDeleted: 'Photo was deleted successfully',
   errorPhotoDeleted: 'Photo could not be deleted',
   addMore: 'Add More',
+  emptyPhotoList: 'This album is empty. Add some photos to start visualizing your memories here.',
   userPhotos: (username?: string, email?: string) => `List of ${username}'s (${email}) Photos`,
   albumTitle: (albumTitle?: string) => `Album ${albumTitle}`,
 };

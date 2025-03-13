@@ -13,6 +13,8 @@ import AddPhotosModal from './AddPhotosModal';
 import { usePhotoCreation } from '../hooks/usePhotoCreation';
 import { getRandomPhotoUrl } from '../utils/photosUtils';
 import { PHOTOS_TEXTS } from '../utils/constants';
+import EmptyPhotos from './EmptyPhotos';
+import { generateUniqueRandomNumber } from '../../../shared/utils/helpers';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IPhotosListProps {}
@@ -34,13 +36,23 @@ const PhotosList: FC<IPhotosListProps> = () => {
   }, [selectedUser, selectedAlbum, navigate]);
 
   const filteredPhotos = useMemo(() => {
-    if (!data) return [];
+    if (!selectedAlbum?.id) return [];
 
-    const validCreatedPhotos = createdPhotos.filter(photo => !deletedPhotos.includes(photo.id));
-    const validFetchedPhotos = data.filter(photo => !deletedPhotos.includes(photo.id));
+    const createdPhotosInAlbum = createdPhotos[selectedAlbum?.id] || [];
+
+    const validCreatedPhotos = createdPhotosInAlbum.filter(photo => {
+      const deletedInAlbum = deletedPhotos[photo.albumId] || [];
+      return !deletedInAlbum.some(deletedPhoto => deletedPhoto.id === photo.id);
+    });
+
+    const validFetchedPhotos =
+      data?.filter(photo => {
+        const deletedInAlbum = deletedPhotos[photo.albumId] || [];
+        return !deletedInAlbum.some(deletedPhoto => deletedPhoto.id === photo.id);
+      }) ?? [];
 
     return [...validCreatedPhotos, ...validFetchedPhotos];
-  }, [data, deletedPhotos, createdPhotos]);
+  }, [data, selectedAlbum?.id, createdPhotos, deletedPhotos]);
 
   const handlePhotoCreation = async (photoTitle: string) => {
     try {
@@ -52,9 +64,10 @@ const PhotosList: FC<IPhotosListProps> = () => {
           thumbnailUrl: randomPhotoURL,
           url: randomPhotoURL,
         });
-        if (createdPhoto) {
-          createPhotoLocally(createdPhoto);
-        }
+
+        const existingIds = Object.values(createdPhotos).flatMap(photos => photos.map(photo => photo.id));
+        const newId = generateUniqueRandomNumber(existingIds, 1, 10000); //Generates unique id since api generates always with the same one
+        createPhotoLocally(selectedAlbum.id.toString(), { ...createdPhoto, id: newId });
       }
       alert(PHOTOS_TEXTS.successPhotoCreated);
     } catch {
@@ -62,22 +75,32 @@ const PhotosList: FC<IPhotosListProps> = () => {
     }
   };
 
-  const handlePhotoDeletion = async (index: number) => {
+  const handlePhotoDeletion = async (index: number, callback?: () => void) => {
     try {
-      const id = filteredPhotos[index].id;
-      await deletePhoto(id.toString());
-      deletePhotoLocally(id);
-      alert(PHOTOS_TEXTS.successPhotoDeleted);
+      if (selectedAlbum?.id) {
+        const id = filteredPhotos[index].id;
+        await deletePhoto(id.toString());
+        deletePhotoLocally(selectedAlbum.id.toString(), filteredPhotos[index]);
+        callback?.();
+        alert(PHOTOS_TEXTS.successPhotoDeleted);
+      }
     } catch {
       alert(PHOTOS_TEXTS.errorPhotoDeleted);
     }
+  };
+
+  const renderImages = () => {
+    if (filteredPhotos?.length) {
+      return <ImageSlider images={filteredPhotos} onDelete={handlePhotoDeletion} />;
+    }
+    return <EmptyPhotos />;
   };
 
   const renderContent = () => {
     if (isLoading) {
       return <h2>{PHOTOS_TEXTS.loading}</h2>;
     }
-    if (data) {
+    if (filteredPhotos) {
       return (
         <>
           <BackButton />
@@ -90,10 +113,11 @@ const PhotosList: FC<IPhotosListProps> = () => {
               <FaPlus /> {PHOTOS_TEXTS.addMore}
             </AddMoreButton>
           </ActionsContainer>
-          <ImageSlider images={filteredPhotos} onDelete={handlePhotoDeletion} />
+          {renderImages()}
         </>
       );
     }
+    return;
   };
 
   return (

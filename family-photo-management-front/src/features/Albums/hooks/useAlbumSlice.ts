@@ -2,23 +2,23 @@ import { useSliceAction, useSliceState } from '../../../shared/hooks/useStore';
 import { IAlbumsActions, IAlbumsInitialState } from '../sliceStore/albumsSlice';
 
 export const useAlbumsSlice = () => {
-  const deletedItems = useSliceState<IAlbumsInitialState, 'deletedItems'>('deletedItems');
+  const deletedAlbums = useSliceState<IAlbumsInitialState, 'deletedAlbums'>('deletedAlbums');
 
-  const deleteItem = useSliceAction<IAlbumsActions, 'deleteItem'>('deleteItem');
+  const deleteAlbum = useSliceAction<IAlbumsActions, 'deleteAlbum'>('deleteAlbum');
 
-  const createdItems = useSliceState<IAlbumsInitialState, 'createdItems'>('createdItems');
+  const createdAlbums = useSliceState<IAlbumsInitialState, 'createdAlbums'>('createdAlbums');
 
-  const createItem = useSliceAction<IAlbumsActions, 'createItem'>('createItem');
+  const createAlbum = useSliceAction<IAlbumsActions, 'createAlbum'>('createAlbum');
 
   const selectedAlbum = useSliceState<IAlbumsInitialState, 'selectedAlbum'>('selectedAlbum');
 
   const setSelectedAlbum = useSliceAction<IAlbumsActions, 'setSelectedAlbum'>('setSelectedAlbum');
 
   return {
-    deletedItems,
-    deleteItemLocally: deleteItem,
-    createdItems,
-    createItemLocally: createItem,
+    deletedAlbums,
+    deleteAlbumLocally: deleteAlbum,
+    createdAlbums,
+    createAlbumLocally: createAlbum,
     selectedAlbum,
     setSelectedAlbum,
   };

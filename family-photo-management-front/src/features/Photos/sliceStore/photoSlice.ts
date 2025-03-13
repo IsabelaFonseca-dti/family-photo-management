@@ -2,34 +2,37 @@ import { SetCallback } from '../../../shared/store/store';
 import { IListPhotoDTO } from '../types/IListPhotoDTO';
 
 export interface IPhotosInitialState {
-  deletedPhotos: number[];
-  createdPhotos: IListPhotoDTO[];
+  deletedPhotos: Record<string, IListPhotoDTO[]>;
+  createdPhotos: Record<string, IListPhotoDTO[]>;
   selectedPhoto: IListPhotoDTO | null;
 }
 
 export type IPhotosActions = ReturnType<typeof actions>;
 
 const initialState: IPhotosInitialState = {
-  deletedPhotos: [],
-  createdPhotos: [],
+  deletedPhotos: {},
+  createdPhotos: {},
   selectedPhoto: null,
 };
 
 const actions = (set: SetCallback<IPhotosInitialState>) => ({
-  deletePhoto: (item: number) =>
+  deletePhoto: (albumId: string, photo: IListPhotoDTO) =>
     set(state => {
-      state.deletedPhotos = [...state.deletedPhotos, item];
+      const currentPhotos = state.deletedPhotos[albumId] || [];
+      state.deletedPhotos[albumId] = [...currentPhotos, photo];
     }),
 
-  createPhoto: (item: IListPhotoDTO) =>
+  createPhoto: (albumId: string, photo: IListPhotoDTO) =>
     set(state => {
-      state.createdPhotos = [...state.createdPhotos, item];
+      const currentPhotos = state.createdPhotos[albumId] || [];
+      state.createdPhotos[albumId] = [...currentPhotos, photo];
     }),
 
   setSelectedPhoto: (selectedPhoto: IPhotosInitialState['selectedPhoto']) =>
     set(state => {
       state.selectedPhoto = selectedPhoto;
     }),
+
   resetPhotosSlice: () => set(() => initialState),
 });
 

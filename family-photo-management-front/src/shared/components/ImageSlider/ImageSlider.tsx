@@ -1,19 +1,15 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { FaArrowLeft, FaArrowRight, FaTrash } from 'react-icons/fa';
 import { DeleteButton, ImageContainer, ImageNotFound, SliderButton, SliderWrapper } from './ImageSlider.styled';
 
 interface ImageSliderProps {
   images: { url: string; title: string }[];
-  onDelete: (index: number) => void;
+  onDelete: (index: number, callback: () => void) => void;
 }
 
 const ImageSlider: FC<ImageSliderProps> = ({ images, onDelete }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [images]);
 
   if (images.length === 0) return null;
 
@@ -32,9 +28,17 @@ const ImageSlider: FC<ImageSliderProps> = ({ images, onDelete }) => {
   };
 
   const handleDelete = () => {
-    onDelete(currentIndex);
-  };
+    onDelete(currentIndex, () => {
+      const isFirst = currentIndex === 0;
+      const isLast = currentIndex === images.length - 1;
 
+      if (!isFirst) {
+        prevImage();
+      } else if (!isLast) {
+        nextImage();
+      }
+    });
+  };
   return (
     <SliderWrapper>
       <SliderButton left onClick={prevImage}>

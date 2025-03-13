@@ -2,34 +2,37 @@ import { SetCallback } from '../../../shared/store/store';
 import { IAlbumsByUserDTO } from '../types/IAlbumsByUserDTO';
 
 export interface IAlbumsInitialState {
-  deletedItems: number[];
-  createdItems: IAlbumsByUserDTO[];
+  deletedAlbums: Record<string, IAlbumsByUserDTO[]>;
+  createdAlbums: Record<string, IAlbumsByUserDTO[]>;
   selectedAlbum: IAlbumsByUserDTO | null;
 }
 
 export type IAlbumsActions = ReturnType<typeof actions>;
 
 const initialState: IAlbumsInitialState = {
-  deletedItems: [],
-  createdItems: [],
+  deletedAlbums: {},
+  createdAlbums: {},
   selectedAlbum: null,
 };
 
 const actions = (set: SetCallback<IAlbumsInitialState>) => ({
-  deleteItem: (item: number) =>
+  deleteAlbum: (userId: string, album: IAlbumsByUserDTO) =>
     set(state => {
-      state.deletedItems = [...state.deletedItems, item];
+      const currentItems = state.deletedAlbums[userId] || [];
+      state.deletedAlbums[userId] = [...currentItems, album];
     }),
 
-  createItem: (item: IAlbumsByUserDTO) =>
+  createAlbum: (userId: string, album: IAlbumsByUserDTO) =>
     set(state => {
-      state.createdItems = [...state.createdItems, item];
+      const currentItems = state.createdAlbums[userId] || [];
+      state.createdAlbums[userId] = [...currentItems, album];
     }),
 
   setSelectedAlbum: (selectedAlbum: IAlbumsInitialState['selectedAlbum']) =>
     set(state => {
       state.selectedAlbum = selectedAlbum;
     }),
+
   resetAlbumsSlice: () => set(() => initialState),
 });
 

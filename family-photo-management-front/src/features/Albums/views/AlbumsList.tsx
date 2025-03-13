@@ -12,13 +12,14 @@ import AddAlbumsModal from './AddAlbumsModal';
 import { useAlbumCreation } from '../hooks/useAlbumCreation';
 import { IAlbumsByUserDTO } from '../types/IAlbumsByUserDTO';
 import { ALBUM_TEXTS } from '../utils/constants';
+import { generateUniqueRandomNumber } from '../../../shared/utils/helpers';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IAlbumsListProps {}
 
 const AlbumsList: FC<IAlbumsListProps> = () => {
   const { selectedUser } = useUsersSlice();
-  const { deletedItems, deleteItemLocally, createItemLocally, createdItems, setSelectedAlbum } = useAlbumsSlice();
+  const { deletedAlbums, deleteAlbumLocally, createAlbumLocally, createdAlbums, setSelectedAlbum } = useAlbumsSlice();
   const { deleteAlbum } = useAlbumDeletion();
   const { createAlbum } = useAlbumCreation();
   const { data, isLoading } = useLoadAlbumsByUser(selectedUser?.id.toString() ?? undefined);
@@ -32,20 +33,31 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
   }, [selectedUser, navigate]);
 
   const filteredAlbums = useMemo(() => {
-    if (!data) return [];
+    if (!selectedUser?.id) return [];
 
-    const validCreatedAlbums = createdItems.filter(album => !deletedItems.includes(album.id));
+    const createdAlbumsByUser = createdAlbums[selectedUser.id] || [];
+    const deletedAlbumsByUser = deletedAlbums[selectedUser.id] || [];
+    const deletedIds = deletedAlbumsByUser.map(album => album.id);
 
-    const validFetchedAlbums = data.filter(album => !deletedItems.includes(album.id));
+    const validCreatedAlbums = createdAlbumsByUser.filter(album => !deletedIds.includes(album.id));
+
+    const validFetchedAlbums = data?.filter(album => !deletedIds.includes(album.id)) ?? [];
 
     return [...validCreatedAlbums, ...validFetchedAlbums];
-  }, [data, deletedItems, createdItems]);
+  }, [data, selectedUser?.id, createdAlbums, deletedAlbums]);
 
   const handleAlbumDeletion = async (id: number) => {
     try {
-      await deleteAlbum(id.toString());
-      deleteItemLocally(id);
-      alert(ALBUM_TEXTS.albumDeletedSuccess);
+      if (selectedUser?.id) {
+        await deleteAlbum(id.toString());
+        const deletedItem = filteredAlbums.find(album => album.id == id);
+        console.log('deletedItem', deletedItem);
+        if (deletedItem) {
+          deleteAlbumLocally(selectedUser?.id.toString(), deletedItem);
+        }
+
+        alert(ALBUM_TEXTS.albumDeletedSuccess);
+      }
     } catch {
       alert(ALBUM_TEXTS.albumDeletedFailure);
     }
@@ -53,14 +65,17 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
 
   const handleAlbumCreation = async (albumTitle: string) => {
     try {
-      const createdAlbum = await createAlbum({
-        title: albumTitle,
-        userId: selectedUser?.id ?? 0,
-      });
-      if (createdAlbum) {
-        createItemLocally(createdAlbum);
+      if (selectedUser?.id) {
+        const createdAlbum = await createAlbum({
+          title: albumTitle,
+          userId: selectedUser?.id,
+        });
+        const existingIds = Object.values(createdAlbums).flatMap(albums => albums.map(album => album.id));
+        const newId = generateUniqueRandomNumber(existingIds, 1, 10000); //Generates unique id since api generates always with the same one
+        createAlbumLocally(selectedUser.id.toString(), { ...createdAlbum, id: newId });
+
+        alert(ALBUM_TEXTS.albumCreatedSuccess);
       }
-      alert(ALBUM_TEXTS.albumCreatedSuccess);
     } catch {
       alert(ALBUM_TEXTS.albumCreatedFailure);
     }

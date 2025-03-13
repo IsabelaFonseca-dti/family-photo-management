@@ -16,10 +16,10 @@ This repository contains the code for the Family Photo Management application, w
 
 ## Deployed Environment Links
 
-Here are the links to the development environments for the application:
+Here are the links to the deployed environments for the application:
 
-- Back-end Development Environment: https://family-photo-management.vercel.app
-- Front-end Development Environment: https://family-photo-management-api.vercel.app
+- Back-end Deployed Environment:https://family-photo-management-api.vercel.app
+- Front-end Deployed Environment: https://family-photo-management.vercel.app
 
 ---
 
@@ -60,7 +60,7 @@ npm install
 
 ```bash
 HTTP_BASE_URL=https://jsonplaceholder.typicode.com
-ALLOWED_CORS_ORIGINS=http://localhost:5173,https://family-photo-management.vercel.app/
+ALLOWED_CORS_ORIGINS=http://localhost:3000,http://localhost:5173,https://family-photo-management.vercel.app
 ```
 
 4. Go back to the root:
