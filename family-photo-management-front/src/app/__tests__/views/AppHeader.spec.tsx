@@ -1,3 +1,4 @@
+import { describe, it } from 'vitest';
 import { renderWithProviders, screen } from '../../../shared/testsSetup/tests-utils';
 import { APP_TEXTS } from '../../utils/constants';
 import AppHeader from '../../views/AppHeader';

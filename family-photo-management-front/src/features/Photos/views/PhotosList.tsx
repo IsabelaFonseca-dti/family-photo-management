@@ -15,6 +15,7 @@ import { getRandomPhotoUrl } from '../utils/photosUtils';
 import { PHOTOS_TEXTS } from '../utils/constants';
 import EmptyPhotos from './EmptyPhotos';
 import { generateUniqueRandomNumber } from '../../../shared/utils/helpers';
+import { MainRoutesEnum } from '../../../app/types/MainRoutesEnum';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IPhotosListProps {}
@@ -26,7 +27,7 @@ const PhotosList: FC<IPhotosListProps> = () => {
   const { deletePhoto } = usePhotoDeletion();
   const { deletePhotoLocally, deletedPhotos, createPhotoLocally, createdPhotos } = usePhotosSlice();
   const navigate = useNavigate();
-  const { data, isLoading } = useLoadPhotosByAlbum(selectedAlbum?.id.toString() ?? undefined);
+  const { data, isLoading, isError } = useLoadPhotosByAlbum(selectedAlbum?.id.toString() ?? undefined);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -34,6 +35,12 @@ const PhotosList: FC<IPhotosListProps> = () => {
       navigate('/');
     }
   }, [selectedUser, selectedAlbum, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate(`/${MainRoutesEnum.ERROR}`);
+    }
+  }, [isError, navigate]);
 
   const filteredPhotos = useMemo(() => {
     if (!selectedAlbum?.id) return [];

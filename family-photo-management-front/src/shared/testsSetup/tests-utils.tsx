@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import React, { ReactElement } from 'react';
+import '@testing-library/jest-dom';
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>;

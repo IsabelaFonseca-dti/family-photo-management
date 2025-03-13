@@ -77,6 +77,12 @@ npm start
 
 The back-end will be running at http://localhost:3000
 
+6. Run tests:
+
+```bash
+npm run test
+```
+
 ## Front End Setup
 
 1. To run the front-end locally:
@@ -114,6 +120,12 @@ npm run dev
 ```
 
 The front-end will be running at http://localhost:5173.
+
+6. Run tests:
+
+```bash
+npm run test
+```
 
 ## Application Screenshots
 
