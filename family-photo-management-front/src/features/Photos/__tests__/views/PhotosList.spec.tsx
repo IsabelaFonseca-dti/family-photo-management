@@ -1,6 +1,6 @@
 import { describe, it, vi, beforeEach, expect } from 'vitest';
-import { renderWithProviders, screen, userEvent, UserEvent, waitFor } from '../../../../shared/testsSetup/tests-utils';
-import { MOCK_LIST_ALBUMS, MOCK_SELECTED_ALBUM, MOCK_SELECTED_USER } from '../mocks/photo.mocks';
+import { renderWithProviders, screen, userEvent, UserEvent } from '../../../../shared/testsSetup/tests-utils';
+import { MOCK_LIST_PHOTOS, MOCK_SELECTED_ALBUM, MOCK_SELECTED_USER } from '../mocks/photo.mocks';
 import { IAlbumsByUserDTO } from '../../../Albums/types/IAlbumsByUserDTO';
 import PhotosList from '../../views/PhotosList';
 import { PHOTOS_TEXTS } from '../../utils/constants';
@@ -13,6 +13,7 @@ import * as loadPhotoModule from '../../hooks/useLoadPhotosByAlbum';
 import * as utils from '../../utils/photosUtils';
 import { IListPhotoDTO } from '../../types/IListPhotoDTO';
 import { IListUserDTO } from '../../../Users/types/IListUserDTO';
+import { MainRoutesEnum } from '../../../../app/types/MainRoutesEnum';
 
 vi.mock('../../../../shared/components/ImageSlider/ImageSlider', () => {
   return {
@@ -125,7 +126,7 @@ describe('Tests on PhotoList component', () => {
     });
   };
 
-  const mockUseLoadPhotosByAlbum = (data: IListPhotoDTO[] = MOCK_LIST_ALBUMS, isLoading = false, isError = false) => {
+  const mockUseLoadPhotosByAlbum = (data: IListPhotoDTO[] = MOCK_LIST_PHOTOS, isLoading = false, isError = false) => {
     vi.spyOn(loadPhotoModule, 'useLoadPhotosByAlbum').mockReturnValue({
       data,
       isLoading,
@@ -175,9 +176,30 @@ describe('Tests on PhotoList component', () => {
       expect(screen.getByText(PHOTOS_TEXTS.emptyPhotoList)).toBeInTheDocument();
       expect(screen.queryByText('image-slider')).not.toBeInTheDocument();
     });
+
+    it('Should render the loading component if data is loading', () => {
+      mockUsersSlice();
+      mockAlbumSlice();
+      mockPhotosSlice();
+      mockUseLoadPhotosByAlbum([], true, false);
+
+      renderWithProviders(<PhotosList />);
+
+      expect(screen.getByText(PHOTOS_TEXTS.loading)).toBeInTheDocument();
+    });
   });
 
   describe('Testing actions', () => {
+    it('Should navigate to the error page if there is an error while loading data', () => {
+      mockUsersSlice();
+      mockAlbumSlice();
+      mockPhotosSlice();
+      mockUseLoadPhotosByAlbum([], false, true);
+
+      renderWithProviders(<PhotosList />);
+
+      expect(mockedUseNavigate).toHaveBeenCalledWith(`/${MainRoutesEnum.ERROR}`);
+    });
     it('Should navigate if there is no user selected', () => {
       mockUsersSlice(null);
       mockAlbumSlice();
@@ -250,7 +272,7 @@ describe('Tests on PhotoList component', () => {
       const deletePhotoButton = screen.getByText('Delete-1');
       await user.click(deletePhotoButton);
 
-      expect(mockDeletePhoto).toHaveBeenCalledWith(MOCK_LIST_ALBUMS[1].id.toString());
+      expect(mockDeletePhoto).toHaveBeenCalledWith(MOCK_LIST_PHOTOS[1].id.toString());
 
       expect(mockDeletePhotoLocally).toHaveBeenCalled();
     });

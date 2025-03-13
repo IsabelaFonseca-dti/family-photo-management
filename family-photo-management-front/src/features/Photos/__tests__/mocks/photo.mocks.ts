@@ -14,7 +14,7 @@ export const MOCK_SELECTED_ALBUM: IAlbumsByUserDTO = {
   id: 1,
 };
 
-export const MOCK_LIST_ALBUMS: IListPhotoDTO[] = [
+export const MOCK_LIST_PHOTOS: IListPhotoDTO[] = [
   {
     albumId: 1,
     id: 1,

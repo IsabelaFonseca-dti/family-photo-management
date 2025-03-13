@@ -22,7 +22,7 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
   const { deletedAlbums, deleteAlbumLocally, createAlbumLocally, createdAlbums, setSelectedAlbum } = useAlbumsSlice();
   const { deleteAlbum } = useAlbumDeletion();
   const { createAlbum } = useAlbumCreation();
-  const { data, isLoading } = useLoadAlbumsByUser(selectedUser?.id.toString() ?? undefined);
+  const { data, isLoading, isError } = useLoadAlbumsByUser(selectedUser?.id.toString() ?? undefined);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -31,6 +31,12 @@ const AlbumsList: FC<IAlbumsListProps> = () => {
       navigate('/');
     }
   }, [selectedUser, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate(`/${MainRoutesEnum.ERROR}`);
+    }
+  }, [isError, navigate]);
 
   const filteredAlbums = useMemo(() => {
     if (!selectedUser?.id) return [];
