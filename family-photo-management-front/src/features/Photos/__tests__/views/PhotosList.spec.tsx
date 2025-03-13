@@ -54,7 +54,7 @@ vi.mock('../../views/AddPhotosModal', () => {
       onSubmit?: (photoTitle: string) => void;
       onClose?: () => void;
     }) => {
-      if (!isOpen) return null; // Se isOpen for false, retorna null (não renderiza nada)
+      if (!isOpen) return null;
 
       return (
         <div data-testid="add-photos-modal" className="open">
