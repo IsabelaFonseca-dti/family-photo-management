@@ -1,7 +1,9 @@
-import { IsNumber, Min } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsInt, Min } from 'class-validator';
 
 export class IdParamDTO {
-  @IsNumber()
+  @IsInt()
   @Min(1)
+  @Transform(({ value }) => Number(value))
   id: number;
 }

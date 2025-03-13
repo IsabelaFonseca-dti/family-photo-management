@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Put, Param, Delete, Get, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Put, Param, Delete, Get } from '@nestjs/common';
 import { AlbumsService } from '../services/albums.service';
 import { CreateAlbumDTORequest } from '../dto/create-album.dto';
 import { UpdateAlbumDTORequest } from '../dto/update-album.dto';
@@ -8,9 +8,7 @@ export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
 
   @Get(':id/photos')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  listPhotosByAlbum(@Param('id') params: IdParamDTO) {
-    const { id } = params;
+  listPhotosByAlbum(@Param() { id }: IdParamDTO) {
     return this.albumsService.listPhotosByAlbum(id);
   }
 
@@ -20,16 +18,12 @@ export class AlbumsController {
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  update(@Param('id') params: IdParamDTO, @Body() updateAlbumDto: UpdateAlbumDTORequest) {
-    const { id } = params;
+  update(@Param() { id }: IdParamDTO, @Body() updateAlbumDto: UpdateAlbumDTORequest) {
     return this.albumsService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  delete(@Param('id') params: IdParamDTO): Promise<boolean> {
-    const { id } = params;
+  delete(@Param() { id }: IdParamDTO): Promise<boolean> {
     return this.albumsService.delete(id);
   }
 }

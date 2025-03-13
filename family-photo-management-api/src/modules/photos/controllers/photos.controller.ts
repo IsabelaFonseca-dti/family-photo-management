@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Put, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Post } from '@nestjs/common';
 import { PhotosService } from '../services/photos.service';
 import { ListPhotosDTOResponse } from '../dto/list-photos.dto';
 import { CreatePhotoDTOPostRequest } from '../dto/create-photo.dto';
@@ -20,16 +20,12 @@ export class PhotosController {
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  update(@Param('id') params: IdParamDTO, @Body() updateAlbumDto: UpdatePhotoDTORequest) {
-    const { id } = params;
+  update(@Param() { id }: IdParamDTO, @Body() updateAlbumDto: UpdatePhotoDTORequest) {
     return this.photosService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  delete(@Param('id') params: IdParamDTO): Promise<boolean> {
-    const { id } = params;
+  delete(@Param() { id }: IdParamDTO): Promise<boolean> {
     return this.photosService.delete(+id);
   }
 }

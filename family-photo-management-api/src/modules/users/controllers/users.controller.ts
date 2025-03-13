@@ -14,9 +14,7 @@ export class UsersController {
   }
 
   @Get(':id/albums')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  findOne(@Param('id') params: IdParamDTO): Promise<ListAlbumsByUserDTOResponse[]> {
-    const { id } = params;
+  findOne(@Param() { id }: IdParamDTO): Promise<ListAlbumsByUserDTOResponse[]> {
     return this.usersService.findAlbumsByUser(id);
   }
 }
