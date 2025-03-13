@@ -1,5 +1,5 @@
-import { CreateAlbumDTOResponse } from './create-album.dto';
+import { CreateAlbumDTORequest, CreateAlbumDTOResponse } from './create-album.dto';
 
 export class UpdateAlbumDTOResponse extends CreateAlbumDTOResponse {}
 
-export type UpdateAlbumDTORequest = Omit<UpdateAlbumDTOResponse, 'id'>;
+export class UpdateAlbumDTORequest extends CreateAlbumDTORequest {}

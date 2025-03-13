@@ -4,6 +4,7 @@ import { PhotosService } from '../../services/photos.service';
 import { ListPhotosDTOResponse } from '../../dto/list-photos.dto';
 import { CreatePhotoDTOResponse, CreatePhotoDTOPostRequest } from '../../dto/create-photo.dto';
 import { UpdatePhotoDTOResponse, UpdatePhotoDTORequest } from '../../dto/update-photo.dto';
+import { BadRequestException } from '@nestjs/common';
 
 describe('Tests on PhotosController', () => {
   let controller: PhotosController;
@@ -86,6 +87,20 @@ describe('Tests on PhotosController', () => {
       expect(mockCreate).toHaveBeenCalledWith(createPhotoDto);
       expect(mockCreate).toHaveBeenCalledTimes(1);
     });
+
+    it('should throw an error if body is invalid (missing required fields)', async () => {
+      try {
+        await controller.create({} as any);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response.message).toEqual([
+          'title should not be empty',
+          'albumId must be a number conforming to the specified constraints',
+          'url should not be empty',
+          'thumbnailUrl should not be empty',
+        ]);
+      }
+    });
   });
 
   describe('tests on update', () => {
@@ -108,11 +123,47 @@ describe('Tests on PhotosController', () => {
     it('should update a photo and return the updated photo', async () => {
       mockUpdate.mockResolvedValueOnce(updatedPhoto);
 
-      const result = await controller.update(photoId.toString(), updatePhotoDto);
+      const result = await controller.update({ id: photoId }, updatePhotoDto);
 
       expect(result).toEqual(updatedPhoto);
       expect(mockUpdate).toHaveBeenCalledWith(photoId, updatePhotoDto);
       expect(mockUpdate).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw an error if id is invalid (less than 1)', async () => {
+      const idParam = { id: 0 };
+
+      try {
+        await controller.update(idParam, updatePhotoDto);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response.message).toEqual(['id must be a positive number']);
+      }
+    });
+
+    it('should throw an error if id is missing or invalid type', async () => {
+      const invalidIdParam = { id: 'invalid' };
+
+      try {
+        await controller.update(invalidIdParam as any, updatePhotoDto);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response.message).toEqual(['id must be a number conforming to the specified constraints']);
+      }
+    });
+
+    it('should throw an error if body is invalid (missing required fields)', async () => {
+      try {
+        await controller.update({ id: photoId }, {} as any);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response.message).toEqual([
+          'title should not be empty',
+          'albumId must be a number conforming to the specified constraints',
+          'url should not be empty',
+          'thumbnailUrl should not be empty',
+        ]);
+      }
     });
   });
 
@@ -122,11 +173,33 @@ describe('Tests on PhotosController', () => {
     it('should delete a photo and return true', async () => {
       mockDelete.mockResolvedValueOnce(true);
 
-      const result = await controller.delete(photoId.toString());
+      const result = await controller.delete({ id: photoId });
 
       expect(result).toBe(true);
       expect(mockDelete).toHaveBeenCalledWith(photoId);
       expect(mockDelete).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw an error if id is invalid (less than 1) when deleting', async () => {
+      const idParam = { id: 0 };
+
+      try {
+        await controller.delete(idParam);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response.message).toEqual(['id must be a positive number']);
+      }
+    });
+
+    it('should throw an error if id is missing or invalid type when deleting', async () => {
+      const invalidIdParam = { id: 'invalid' };
+
+      try {
+        await controller.delete(invalidIdParam as any);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response.message).toEqual(['id must be a number conforming to the specified constraints']);
+      }
     });
   });
 });

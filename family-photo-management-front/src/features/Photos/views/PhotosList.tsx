@@ -45,7 +45,7 @@ const PhotosList: FC<IPhotosListProps> = () => {
   const handlePhotoCreation = async (photoTitle: string) => {
     try {
       if (selectedAlbum?.id) {
-        const randomPhotoURL = getRandomPhotoUrl();
+        const randomPhotoURL = getRandomPhotoUrl(); //Generates random URL since i wont be storing the file
         const createdPhoto = await postPhoto({
           title: photoTitle,
           albumId: selectedAlbum?.id,

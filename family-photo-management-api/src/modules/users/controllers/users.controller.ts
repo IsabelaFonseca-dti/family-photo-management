@@ -1,7 +1,8 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { ListUsersDTOResponse } from '../dto/list-users.dto';
 import { ListAlbumsByUserDTOResponse } from '../dto/list-albums-by-user.dto';
+import { IdParamDTO } from '../../../utils';
 
 @Controller('users')
 export class UsersController {
@@ -13,7 +14,9 @@ export class UsersController {
   }
 
   @Get(':id/albums')
-  findOne(@Param('id') id: string): Promise<ListAlbumsByUserDTOResponse[]> {
-    return this.usersService.findAlbumsByUser(+id);
+  @UsePipes(new ValidationPipe({ transform: true }))
+  findOne(@Param('id') params: IdParamDTO): Promise<ListAlbumsByUserDTOResponse[]> {
+    const { id } = params;
+    return this.usersService.findAlbumsByUser(id);
   }
 }

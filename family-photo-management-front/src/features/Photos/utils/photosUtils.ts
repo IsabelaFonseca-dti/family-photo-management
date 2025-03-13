@@ -1,3 +1,4 @@
 export const getRandomPhotoUrl = (): string => {
-  return `https://picsum.photos/200/300?random=${Math.floor(Math.random() * 100) + 1}`;
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  return `https://via.placeholder.com/200x300/${randomColor}`;
 };

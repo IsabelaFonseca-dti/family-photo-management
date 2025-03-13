@@ -1,7 +1,15 @@
-export class CreateAlbumDTOResponse {
-  userId: number;
-  id: number;
+import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+
+export class CreateAlbumDTORequest {
+  @IsString()
+  @IsNotEmpty()
   title: string;
+
+  @IsNumber()
+  @Min(1)
+  userId: number;
 }
 
-export type CreateAlbumDTORequest = Omit<CreateAlbumDTOResponse, 'id'>;
+export class CreateAlbumDTOResponse extends CreateAlbumDTORequest {
+  id: number;
+}

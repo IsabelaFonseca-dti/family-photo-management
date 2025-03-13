@@ -32,7 +32,7 @@ const ImageSlider: FC<ImageSliderProps> = ({ images, onDelete }) => {
   };
 
   const handleDelete = () => {
-    onDelete(currentIndex); // Chama a função onDelete passando o índice da imagem atual
+    onDelete(currentIndex);
   };
 
   return (
@@ -52,7 +52,7 @@ const ImageSlider: FC<ImageSliderProps> = ({ images, onDelete }) => {
           <img
             src={images[currentIndex].url}
             alt={images[currentIndex].title}
-            onError={handleImageError} // The via.placeholder api did not work as expected
+            onError={handleImageError} // The via.placeholder api did not work as expected, so i just treated to show an empty container instead
           />
         )}
         <p>{images[currentIndex].title}</p>

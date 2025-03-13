@@ -1,6 +1,8 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
-import * as cors from 'cors';
+import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cors from 'cors';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -9,17 +11,19 @@ async function bootstrap() {
   const allowedOrigins = process.env.ALLOWED_CORS_ORIGINS?.split(',') || [];
 
   const corsOptions = {
-    origin: function (origin, callback) {
-      if (allowedOrigins.some(allowedOrigin => origin.startsWith(allowedOrigin))) {
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.some(allowedOrigin => origin.includes(allowedOrigin))) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    preflightContinue: false,
   };
 
   app.use(cors(corsOptions));
+  app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
     .setTitle('Family Photo Management API')

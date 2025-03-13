@@ -1,5 +1,22 @@
+import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 import { ListPhotosDTOResponse } from './list-photos.dto';
 
 export class CreatePhotoDTOResponse extends ListPhotosDTOResponse {}
 
-export type CreatePhotoDTOPostRequest = Omit<CreatePhotoDTOResponse, 'id'>;
+export class CreatePhotoDTOPostRequest {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsNumber()
+  @Min(1)
+  albumId: number;
+
+  @IsString()
+  @IsNotEmpty()
+  url: string;
+
+  @IsString()
+  @IsNotEmpty()
+  thumbnailUrl: string;
+}

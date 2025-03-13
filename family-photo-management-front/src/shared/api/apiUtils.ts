@@ -12,7 +12,7 @@ export const API = {
   DEFAULT_CONFIG: {
     baseURL:
       import.meta.env.VITE_API_LOCAL_RUNNING === 'true'
-        ? import.meta.env.VITE_API_LOCALHOST
+        ? import.meta.env.VITE_API_LOCALHOST || 'http://localhost:3000'
         : import.meta.env.VITE_API_PUBLISHED_HOST,
     timeout: 30000,
     headers: {},

@@ -1,5 +1,5 @@
-import { CreatePhotoDTOResponse } from './create-photo.dto';
+import { CreatePhotoDTOPostRequest, CreatePhotoDTOResponse } from './create-photo.dto';
 
 export class UpdatePhotoDTOResponse extends CreatePhotoDTOResponse {}
 
-export type UpdatePhotoDTORequest = Omit<UpdatePhotoDTOResponse, 'id'>;
+export class UpdatePhotoDTORequest extends CreatePhotoDTOPostRequest {}
