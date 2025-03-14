@@ -60,7 +60,7 @@ npm install
 
 ```bash
 HTTP_BASE_URL=https://jsonplaceholder.typicode.com
-ALLOWED_CORS_ORIGINS=http://localhost:3000/api,http://localhost:5173,https://family-photo-management.vercel.app/api
+ALLOWED_CORS_ORIGINS=http://localhost:3000/api,http://localhost:5173,https://family-photo-management.vercel.app
 ```
 
 4. Go back to the root:
