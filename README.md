@@ -18,7 +18,7 @@ This repository contains the code for the Family Photo Management application, w
 
 Here are the links to the deployed environments for the application:
 
-- Back-end Deployed Environment:https://family-photo-management-api.vercel.app/api
+- Back-end Deployed Environment:https://app-service-production-c596.up.railway.app/api
 - Front-end Deployed Environment: https://family-photo-management.vercel.app
 
 ---
@@ -101,7 +101,7 @@ npm install
 
 ```bash
 VITE_API_LOCALHOST=http://localhost:3000/api
-VITE_API_PUBLISHED_HOST=https://family-photo-management-api.vercel.app/api
+VITE_API_PUBLISHED_HOST=https://app-service-production-c596.up.railway.app/api
 VITE_API_LOCAL_RUNNING=true
 ```
 
