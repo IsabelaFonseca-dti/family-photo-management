@@ -18,7 +18,7 @@ This repository contains the code for the Family Photo Management application, w
 
 Here are the links to the deployed environments for the application:
 
-- Back-end Deployed Environment:https://family-photo-management-api.vercel.app
+- Back-end Deployed Environment:https://family-photo-management-api.vercel.app/api
 - Front-end Deployed Environment: https://family-photo-management.vercel.app
 
 ---
@@ -60,7 +60,7 @@ npm install
 
 ```bash
 HTTP_BASE_URL=https://jsonplaceholder.typicode.com
-ALLOWED_CORS_ORIGINS=http://localhost:3000,http://localhost:5173,https://family-photo-management.vercel.app
+ALLOWED_CORS_ORIGINS=http://localhost:3000/api,http://localhost:5173,https://family-photo-management.vercel.app/api
 ```
 
 4. Go back to the root:
@@ -75,7 +75,7 @@ cd ../
 npm start
 ```
 
-The back-end will be running at http://localhost:3000
+The back-end will be running at http://localhost:3000/api
 
 6. Run tests:
 
@@ -100,8 +100,8 @@ npm install
 3. Create a .env file inside this family-photo-management-front folder and add the following variables:
 
 ```bash
-VITE_API_LOCALHOST=http://localhost:3000
-VITE_API_PUBLISHED_HOST=https://family-photo-management-api.vercel.app
+VITE_API_LOCALHOST=http://localhost:3000/api
+VITE_API_PUBLISHED_HOST=https://family-photo-management-api.vercel.app/api
 VITE_API_LOCAL_RUNNING=true
 ```
 
